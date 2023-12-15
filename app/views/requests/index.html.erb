@@ -1,0 +1,46 @@
+<!-- app/views/admin/requests/index.html.erb -->
+<h1>Requests Report</h1>
+
+<% if @requests.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Request Code</th>
+      <th>Date</th>
+      <% if current_user.admin? %>
+        <th>Client</th>
+      <% end %>
+
+      <th>Subject</th>
+      <th>Lecturer</th>
+      <th>Lecture Hours</th>
+      <% if current_user.admin? %>
+
+      <th>Actual Lecture Hours</th>
+      <% end %>
+
+    </tr>
+    </thead>
+    <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td><%= request.request_code %></td>
+        <td><%= request.lecturer.scheduled_date %></td>
+
+        <% if current_user.admin? %>
+         <td><%= request.user.username %></td>
+        <% end %>
+        <td><%= request.lecturer.subject.name %></td>
+        <td><%= request.lecturer.name %></td>
+        <td><%= "#{request.chosen_start.strftime('%H:%M')} - #{request.chosen_end.strftime('%H:%M')}" %></td>
+        <% if current_user.admin? %>
+
+        <td><%= "#{request.lecturer.from_time.strftime('%H:%M')} - #{request.lecturer.to_time.strftime('%H:%M')}" if request.lecturer.from_time && request.lecturer.to_time %></td>
+      <% end %>
+          </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No requests available.</p>
+<% end %>

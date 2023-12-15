@@ -1,0 +1,51 @@
+<!-- app/views/admin/subjects/show.html.erb -->
+<h1><%= @subject.name %></h1>
+
+<p>
+  <strong>Description:</strong>
+  <%= @subject.description %>
+</p>
+
+<!-- Display associated lecturers -->
+<h2>Lecturers:</h2>
+<% if @subject.lecturers.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @subject.lecturers.each do |lecturer| %>
+      <tr>
+        <td><%= lecturer.name %></td>
+        <td><%= lecturer.scheduled_date %></td>
+        <td><%= lecturer.from_time.strftime("%H:%M") %></td>
+        <td><%= lecturer.to_time.strftime("%H:%M") %></td>
+        <td>
+          <% if current_user.admin? %>
+            <%= link_to 'Edit', edit_subject_lecturer_path(@subject, lecturer), class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Destroy', subject_lecturer_path(@subject, lecturer), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+          <% else %>
+            <%= link_to 'Choose', new_lecturer_request_path(lecturer), class: 'btn btn-info btn-sm mr-1' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No lecturers for this subject.</p>
+<% end %>
+<% if current_user.admin? %>
+
+  <%= link_to 'Edit', edit_subject_path(@subject), class: 'btn btn-primary' %>
+  <%= link_to 'Destroy', subject_path(@subject), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <%= link_to 'Add Lecturer', new_subject_lecturer_path(@subject), class: 'btn btn-success' %>
+<% end %>
+
+<%= link_to 'Back', subjects_path, class: 'btn btn-secondary' %>

@@ -1,0 +1,25 @@
+<%= form_with(model: [@subject, @lecturer], local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :from_time, class: "form-label" %>
+    <%= form.time_field :from_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :to_time, class: "form-label" %>
+    <%= form.time_field :to_time, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :scheduled_date, class: 'form-label' %>
+    <%= form.date_field :scheduled_date, class: 'form-control', required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

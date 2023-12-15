@@ -1,0 +1,23 @@
+<%= form_with(model: @subject, local: true) do |form| %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+
+    <% end %>
+
+    <%#= link_to 'Change Lecturer', '#', class: 'btn btn-success add-nested-field', data: { association: 'lecturers', blueprint: j(render('lecturers/lecturer_fields', f: form)) } %>
+<!--  </div>-->
+
+  <div class="mb-3">
+    <%= form.submit 'Update Subject', class: 'btn btn-primary' %>
+    <%= link_to 'Back', subjects_path, class: 'btn btn-secondary' %>
+
+  </div>
+<%# end %>

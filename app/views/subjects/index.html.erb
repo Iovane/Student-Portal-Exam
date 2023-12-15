@@ -1,0 +1,37 @@
+<!-- app/views/admin/subjects/index.html.erb -->
+<h1>Subjects</h1>
+
+<% if @subjects.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Lecturers</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @subjects.each do |subject| %>
+      <tr>
+        <td><%= link_to subject.name, subject_path(subject) %></td>
+        <td><%= subject.description %></td>
+        <td><%= subject.lecturers.count %></td>
+        <td>
+          <%= link_to 'Show', subject_path(subject), class: 'btn btn-info btn-sm' %>
+
+          <% if current_user.admin? %>
+            <%= link_to 'Edit', edit_subject_path(subject), class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Destroy', subject_path(subject), data: {turbo_method: :delete ,turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No subjects available.</p>
+<% end %>
+<% if current_user.admin? %>
+<%= link_to 'New Subject', new_subject_path, class: 'btn btn-success' %>
+<% end %>
