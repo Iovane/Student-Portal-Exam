@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :questions, only: [:new, :create]
+
   resources :subjects do
     resources :lecturers, except: [:show]
   end
